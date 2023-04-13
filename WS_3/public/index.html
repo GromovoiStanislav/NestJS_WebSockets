@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <title>NodejS chat</title>
+  </head>
+  <body>
+    <form action="chat.html" method="get" class="auth">
+      <div class="card">
+        <div class="card-content">
+          <h4 class="card-title">Awesome chat</h4>
+          <div class="input-field">
+            <label for="name">Name: </label>
+            <input
+              type="text"
+              class="validate"
+              name="name"
+              required
+              id="name"
+            />
+          </div>
+          <div class="input-field">
+            <label for="name">Room: </label>
+            <input
+              type="text"
+              class="validate"
+              name="room"
+              required
+              id="room"
+            />
+          </div>
+        </div>
+
+        <div class="card-action">
+          <button class="waves-effect waves-teal btn-flat">Enter chat</button>
+        </div>
+      </div>
+    </form>
+  </body>
+</html>

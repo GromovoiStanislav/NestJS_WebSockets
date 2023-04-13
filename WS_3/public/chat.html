@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <title>NodejS chat</title>
+  </head>
+  <body>
+    <div id="app">
+      <div class="chat">
+        <div class="chat-users collection">
+          <a
+            class="collection-item"
+            v-for="u in users"
+            :class="{'active':u.id===user.id}"
+          >
+            {{u.name}}
+          </a>
+        </div>
+        <div class="chat-messages" ref="messages">
+          <chat-message
+            v-for="(m,idx) in messages"
+            :message="m"
+            :user="user"
+            :key="idx"
+          ></chat-message>
+        </div>
+      </div>
+      <div class="actions">
+        <div class="input-field">
+          <input
+            type="text"
+            placeholder="Type youe message..."
+            autocomplete="false"
+            autofocus
+            v-model.trim="message"
+            @keydown.enter="sendMessage"
+          />
+        </div>
+        <button class="btn" @click="sendMessage" :disabled="message.length===0">
+          Send
+        </button>
+      </div>
+    </div>
+
+    <!-- <script src="socket.io/socket.io.js"></script> -->
+    <script
+      src="https://cdn.socket.io/4.3.2/socket.io.min.js"
+      integrity="sha384-KAZ4DtjNhLChOB/hxXuKqhMLYvx3b5MlT55xPEiNmREKRzeEm+RVPlTnAn0ajQNs"
+      crossorigin="anonymous"
+    ></script>
+    <script src="app.js"></script>
+  </body>
+</html>
