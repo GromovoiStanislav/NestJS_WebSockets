@@ -23,6 +23,7 @@ class ChatMessage {
 
 
 @WebSocketGateway({
+  namespace: "vuechat",
   cors: {
     origin: "*"
   }
@@ -35,24 +36,11 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
   @WebSocketServer()
   server: Server;
 
-  @SubscribeMessage("text-chat")
-  handleMessage(
-    @MessageBody() message: ChatMessage,
-    @ConnectedSocket() client: Socket
-  ) {
-    this.server.emit("text-chat", {
-      ...message,
-      time: new Date().toDateString()
-    });
-  }
-
   @SubscribeMessage("join")
   handleJoin(
     @MessageBody() user,
     @ConnectedSocket() client: Socket
   ) {
-    console.log("join",user);
-
     client.join(user.room);
     this.users.remove(client.id);
     this.users.add(client.id, user.name, user.room);
@@ -71,7 +59,6 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     @MessageBody() data,
     @ConnectedSocket() client: Socket
   ) {
-    console.log("message:create",data);
     const user = this.users.get(client.id);
     if (user) {
       this.server.to(user.room).emit(
@@ -100,7 +87,14 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
 
   handleConnection(client: Socket, ...args: any[]) {
     console.log(`Connected ${client.id}`);
-    console.log(`Connected ${args}`);
+    console.log('handshake',client.handshake)
+    console.log('headers',client.handshake.headers)
+    console.log('Authorization',client.handshake.headers.authorization)
+    console.log('query',client.handshake.query)
+    // @ts-ignore
+    console.log('my-custom-data',JSON.parse(client.handshake.query['my-custom-data']))
+    console.log('auth',client.handshake.auth)
+    console.log(`args ${args}`);
     //Выполняем действия
   }
 
