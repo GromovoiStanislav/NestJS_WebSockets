@@ -1,1 +1,1 @@
-## realtime chat app using NestJs and Socket.io, Authentication (Vue)
+## Realtime chat app using NestJs and Socket.io, Authentication (VueJS)
