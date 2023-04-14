@@ -2,10 +2,9 @@ import { CanActivate, Injectable } from "@nestjs/common";
 import { Observable } from "rxjs";
 
 @Injectable()
-export class WsGuard implements CanActivate {
+export class WsJwtGuard implements CanActivate {
 
-  // constructor(private userService: UserService) {
-  // }
+  // constructor(private userService: UserService) {}
 
   canActivate(context: any): boolean | any | Promise<boolean | any> | Observable<boolean | any> {
     const bearerToken = context.args[0].handshake.headers.authorization.split(" ")[1];

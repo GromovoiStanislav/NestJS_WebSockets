@@ -1,8 +1,20 @@
 const socket = io("http://localhost:3000/vuechat", {
-  extraHeaders: {
-    "my-custom-header": "1234",
-    Authorization: "Bearer accessToken"
+  // extraHeaders: {
+  //   "my-custom-header": "1234",
+  //    Authorization: "Bearer accessToken"
+  // },
+  transportOptions: {
+    polling: {
+      extraHeaders: {
+        "my-custom-header": "Hello world",
+        Authorization: "Bearer accessToken"
+      }
+    }
   },
+
+
+
+
   auth: {
     token: "123"
   },

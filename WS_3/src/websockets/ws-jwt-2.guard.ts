@@ -1,34 +1,32 @@
-import { CanActivate, Injectable } from "@nestjs/common";
-import { Observable } from "rxjs";
+import { CanActivate, ExecutionContext, Injectable, Logger } from "@nestjs/common";
+import { WsException } from "@nestjs/websockets";
+import { Socket } from "socket.io";
+
 
 @Injectable()
-export class WsJwtGuard implements CanActivate {
+export class WsJwt2Guard implements CanActivate {
 
-  // constructor(private userService: UserService) {
-  // }
+  //constructor(private authService: AuthService) { }
 
-  canActivate(context: any): boolean | any | Promise<boolean | any> | Observable<boolean | any> {
-    const bearerToken = context.args[0].handshake.headers.authorization.split(" ")[1];
-    // try {
-    //   const decoded = jwt.verify(bearerToken, 'secret-key') as any;
-    //   return new Promise((resolve, reject) => {
-    //     return this.userService.findByUsername(decoded.username).then(user => {
-    //       if (user) {
-    //         resolve(user);
-    //       } else {
-    //         reject(false);
-    //       }
-    //     });
-    //
-    //   });
-    // } catch (ex) {
-    //   console.log(ex);
-    //   return false;
-    // }
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+
+    try {
+      const client: Socket = context.switchToWs().getClient<Socket>();
+      // const authToken = client.handshake?.query?.token;
+      // const user: User = await this.authService.verifyUser(authToken);
+      // client.join(`house_${user?.house?.id}`);
+
+      const user = { id: 1, name: "Tom" };
+      context.switchToHttp().getRequest().user = user;
+      // or:
+      // context.switchToWs().getClient().user = user;
 
 
-    // example:
-    return bearerToken === "accessToken";
+      return Boolean(user);
+    } catch (err) {
+      throw new WsException(err.message);
+    }
 
   }
+
 }
