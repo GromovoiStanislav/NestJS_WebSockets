@@ -1,0 +1,29 @@
+<h1>Server sent event</h1>
+
+<div>
+  <input id="message" type="text" />
+  <button onclick="handleSubmitNewMessage()">Submit</button>
+</div>
+
+<script type="text/javascript">
+
+  const eventSource = new EventSource("/sse");
+  eventSource.onmessage = ({ data }) => {
+    const message = document.createElement("li");
+    message.innerText = "New message: " + data;
+    document.body.appendChild(message);
+  };
+
+  const message = document.getElementById("message");
+  const handleSubmitNewMessage = async () => {
+    let response = await fetch("http://localhost:3001/ws", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      },
+      body: JSON.stringify({message:message.value})
+    });
+    console.log('response',response);
+  };
+
+</script>
