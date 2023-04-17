@@ -1,7 +1,5 @@
 import { Body, Controller, Post, Sse } from "@nestjs/common";
-
 import { SocketClient } from "./socket/socket-client";
-
 import { EventsService } from "./events/events.service";
 
 @Controller()

@@ -20,4 +20,19 @@ export class AppController {
       map((num:number) => ({ data: { number: num } } as MessageEvent)),
     );
   }
+
+
+  @Sse('sse2')
+  sse2(): Observable<any> {
+    //data have to stream
+    const arr = ['d1','d2', 'd3'];
+    return new Observable((subscriber) => {
+      while(arr.length){
+        subscriber.next(arr.pop()); // data have to return in every chunk
+      }
+      if(arr.length == 0) subscriber.complete(); // complete the subscription
+    });
+  }
+
+
 }
