@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+Data events:<br/>
+<div id="result"></div>
+<hr/>
+Errors:<br/>
+<div id="errors"></div>
+<hr/>
+Create parallel event:<br/>
+
+<form id="form1">
+    <input type="submit" value="EMIT EVENT">
+</form>
+
+<script>
+  const subscription = new EventSource(`/api/events/`);
+  subscription.onmessage = (message) => {
+    document.getElementById("result").innerHTML += message.data + "<br/>";
+  };
+  subscription.onerror = (message) => {
+    document.getElementById("errors").innerHTML += JSON.stringify(message) + "<br/>";
+  };
+
+  function formSubmit(event) {
+    const url = "/api/emit/";
+    const request = new XMLHttpRequest();
+    request.open('POST', url, true);
+    request.onload = function () {
+      console.log(request.responseText);
+    };
+    request.send(new FormData(event.target));
+    event.preventDefault();
+  }
+
+  document.getElementById("form1").addEventListener("submit", formSubmit);
+</script>
+
+</body>
+</html>
