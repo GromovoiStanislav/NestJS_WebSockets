@@ -1,24 +1,30 @@
-import { Logger } from '@nestjs/common';
+import { Logger } from "@nestjs/common";
 import {
   WebSocketGateway,
   WebSocketServer,
   OnGatewayConnection,
-  OnGatewayDisconnect,
-} from '@nestjs/websockets';
+  OnGatewayDisconnect
+} from "@nestjs/websockets";
 
-@WebSocketGateway(4001, { transport: ['websocket'] })
-export class AppGateway implements OnGatewayConnection, OnGatewayDisconnect {
+@WebSocketGateway(4001, {
+  transport: ["websocket"],
+  namespace: "idea",
+  cors: {
+    origin: "*"
+  }
+})
+export class IdeaGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   wss;
 
-  private logger = new Logger('AppGateway');
+  private logger = new Logger("AppGateway");
 
   handleConnection(client) {
-    this.logger.log('New client connected');
-    client.emit('connection', 'Successfully connected to server');
+    this.logger.log("New client connected");
+    client.emit("connection", "Successfully connected to server");
   }
 
   handleDisconnect(client) {
-    this.logger.log('Client disconnected');
+    this.logger.log("Client disconnected");
   }
 }

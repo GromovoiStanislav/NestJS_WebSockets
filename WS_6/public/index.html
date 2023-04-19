@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+</head>
+<body>
+
+<h1>Websocket events:</h1>
+
+<div>
+  <input id="message" type="text" />
+  <button onclick="handleSubmitNewMessage()">Submit</button>
+</div>
+
+
+<ul id="app"></ul>
+
+<script src="https://cdn.socket.io/4.3.2/socket.io.min.js"
+        integrity="sha384-KAZ4DtjNhLChOB/hxXuKqhMLYvx3b5MlT55xPEiNmREKRzeEm+RVPlTnAn0ajQNs"
+        crossorigin="anonymous"></script>
+<script>
+  const socket = io("http://localhost:4001/idea");
+
+  socket.on("connection", data => console.log(data));
+  socket.on("newIdea", data => {
+    console.log('ws data',data);
+    document.getElementById("app").innerHTML += `
+          <li>
+            <div>
+              <h2>${data.idea}</h2>
+              <p>${data.description}</p>
+            </div>
+          </li>
+        `;
+  });
+
+  const message = document.getElementById("message");
+  const handleSubmitNewMessage = async () => {
+    let response = await fetch("http://localhost:3000/ideas", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8"
+      },
+      body: JSON.stringify({ message: message.value })
+    });
+    console.log("response", response.json());
+  };
+
+</script>
+</body>
+</html>
