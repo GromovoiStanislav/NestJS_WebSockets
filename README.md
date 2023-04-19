@@ -12,3 +12,4 @@
 - WS_4 and SSE - Connect to Websocket Server from another NestJS Server
 - WS_5 - NestJS and Socket.io chat application with data persistence in DB
 - WS_6 - NestJS Websocket events example
+- WS_7 - NestJS Websocket example from NestJS-Documentation
