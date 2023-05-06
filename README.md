@@ -14,3 +14,4 @@
 - WS_6 - NestJS Websocket events example
 - WS_7 - NestJS Websocket example from NestJS-Documentation
 - WS_8 - NestJS real-time chat with VueJS client
+- WS_9 - NestJS simple real-time chat with VueJS client
