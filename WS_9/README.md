@@ -1,1 +1,1 @@
-## NestJS real-time chat with VueJS client
+## NestJS simple real-time chat with VueJS client
